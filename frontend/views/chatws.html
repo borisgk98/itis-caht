@@ -1,0 +1,34 @@
+<h2>Web socket chat</h2>
+<script>
+    var webSocket;
+
+    function connect() {
+        webSocket = new WebSocket('ws://localhost/api/ws/chat');
+
+        webSocket.onmessage = function receiveMessage(response) {
+            console.log(response);
+            let data = response['data'];
+            let message = JSON.parse(data);
+            $("#mes").append("<div>" +
+                message.date + " " + (message.user == null ? "" : message.user.login) + ":  " + message.data +
+                "</div>");
+        };
+
+        webSocket.onerror = function errorShow() {
+            console.log('Ошибка авторизации');
+        }
+        return webSocket;
+    }
+
+    function sendMess() {
+        console.log("click");
+        let text = $("#text").val();
+        console.log(text);
+        let payload = {
+            data: text
+        };
+
+        webSocket.send(JSON.stringify(payload));
+    }
+    connect();
+</script>

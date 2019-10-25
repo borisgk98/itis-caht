@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    username: postgres
+    password: pgpass1289
+    url: jdbc:postgresql://localhost:5432/postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+  kafka:
+    bootstrap-servers: 127.0.0.1:9092
+  liquibase:
+    change-log: "classpath:db/changelog/db.changelog-master.yaml"
+  main:
+    allow-bean-definition-overriding: true
+server:
+  port: 8081

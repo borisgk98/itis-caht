@@ -1,0 +1,38 @@
+<script>
+    $.postJSON = function(url, data, callback) {
+        return jQuery.ajax({
+            'type': 'POST',
+            'url': url,
+            'contentType': 'application/json',
+            'data': JSON.stringify(data),
+            'dataType': 'json',
+            'success': callback
+        });
+    };
+    const sendMess = () => {
+        let text = $("#text").val();
+        let payload = {
+            data: text
+        };
+        $.postJSON("/api/messages", payload, () => {});
+    };
+    const getMess = () => {
+        jQuery.ajax({
+            'type': 'GET',
+            'url': "/api/messages/new",
+            'contentType': 'application/json',
+            'dataType': 'json',
+            'success': (data) => {
+                data.forEach(x => {
+                    $("#mes").append("<div>" +
+                        x.date + " " + (x.user == null ? "" : x.user.login) + ":  " + x.data +
+                        "</div>");
+                });
+                getMess();
+            }
+        });
+    };
+    getMess();
+    $("#send").click(sendMess());
+</script>
+<h2>Long pulling chat</h2>
