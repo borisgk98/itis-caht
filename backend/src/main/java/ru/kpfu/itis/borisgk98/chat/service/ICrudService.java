@@ -1,7 +1,7 @@
 package ru.kpfu.itis.borisgk98.chat.service;
 
 import ru.kpfu.itis.borisgk98.chat.exception.ModelNotFound;
-import ru.kpfu.itis.borisgk98.chat.model.AbstractEntity;
+import ru.kpfu.itis.borisgk98.chat.model.entity.AbstractEntity;
 
 import java.util.List;
 

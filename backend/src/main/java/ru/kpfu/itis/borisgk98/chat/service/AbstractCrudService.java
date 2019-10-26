@@ -6,7 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import ru.kpfu.itis.borisgk98.chat.exception.ModelNotFound;
-import ru.kpfu.itis.borisgk98.chat.model.AbstractEntity;
+import ru.kpfu.itis.borisgk98.chat.model.entity.AbstractEntity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;

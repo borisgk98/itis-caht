@@ -1,4 +1,4 @@
-package ru.kpfu.itis.borisgk98.chat.model;
+package ru.kpfu.itis.borisgk98.chat.model.entity;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.kpfu.itis.borisgk98.chat.model.Message;
+import ru.kpfu.itis.borisgk98.chat.model.entity.Message;
 import ru.kpfu.itis.borisgk98.chat.service.MessageService;
 import ru.kpfu.itis.borisgk98.chat.statical.StaticNames;
 

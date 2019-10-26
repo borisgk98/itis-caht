@@ -1,11 +1,10 @@
 package ru.kpfu.itis.borisgk98.chat.service;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
-import ru.kpfu.itis.borisgk98.chat.model.Message;
-import ru.kpfu.itis.borisgk98.chat.model.MessageStatus;
-import ru.kpfu.itis.borisgk98.chat.model.MessageStatusEntity;
+import ru.kpfu.itis.borisgk98.chat.model.entity.Message;
+import ru.kpfu.itis.borisgk98.chat.model.entity.MessageStatus;
+import ru.kpfu.itis.borisgk98.chat.model.entity.MessageStatusEntity;
 import ru.kpfu.itis.borisgk98.chat.repo.MessageRepo;
 
 import javax.persistence.EntityManager;

@@ -1,6 +1,7 @@
 package ru.kpfu.itis.borisgk98.chat.ws;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
@@ -8,20 +9,19 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
-import ru.kpfu.itis.borisgk98.chat.model.Message;
+import ru.kpfu.itis.borisgk98.chat.model.entity.Message;
+import ru.kpfu.itis.borisgk98.chat.service.MessageService;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentSkipListSet;
 
 @Component
+@RequiredArgsConstructor
 public class MessagesWebSocketHandler extends TextWebSocketHandler {
 
     private Map<String, WebSocketSession> sessions = new ConcurrentHashMap<>();
     private ObjectMapper objectMapper = new ObjectMapper();
+    private final MessageService messageService;
 
 
     @Override
@@ -35,7 +35,7 @@ public class MessagesWebSocketHandler extends TextWebSocketHandler {
         HttpHeaders headers = session.getHandshakeHeaders();
         String messageAsString = (String) message.getPayload();
         Message body = objectMapper.readValue(messageAsString, Message.class);
-
+        messageService.create(body);
         for (WebSocketSession currentSession : sessions.values()) {
             currentSession.sendMessage(new TextMessage(messageAsString));
         }

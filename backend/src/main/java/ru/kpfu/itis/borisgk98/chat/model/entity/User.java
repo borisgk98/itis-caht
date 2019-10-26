@@ -1,4 +1,4 @@
-package ru.kpfu.itis.borisgk98.chat.model;
+package ru.kpfu.itis.borisgk98.chat.model.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.List;
@@ -25,4 +26,7 @@ public class User extends AbstractEntity {
 
     @OneToMany
     private List<Message> messages;
+
+    @ManyToMany
+    private List<UserRole> roles;
 }
