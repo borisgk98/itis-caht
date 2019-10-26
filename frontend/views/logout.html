@@ -1,6 +1,17 @@
 <script>
-    function eraseCookie(name) {
-        document.cookie = name+'=; Max-Age=-99999999;';
-    }
-    eraseCookie("")
+    jQuery.ajax({
+        'type': 'POST',
+        'url': "/api/logout",
+        'contentType': 'application/json',
+        'dataType': 'json',
+        'data': "{}",
+        success: (data, textStatus, jqXHR) => {
+            document.location = "/";
+        },
+        error: (data, textStatus, jqXHR) => {
+            console.log(data);
+            console.log(textStatus);
+            console.log(jqXHR);
+        }
+    });
 </script>
