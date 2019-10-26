@@ -12,8 +12,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
+import ru.kpfu.itis.borisgk98.chat.statical.StaticNames;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Base64;
 import java.util.Date;
@@ -56,8 +58,15 @@ public class JwtTokenProvider {
     }
 
     public String resolveToken(HttpServletRequest req) {
-        String token = req.getHeader("Authorization");
-        return token;
+        if (req.getCookies() != null) {
+            for (Cookie cookie : req.getCookies()) {
+                if (cookie.getName().equals(StaticNames.AUTH_HEADER)) {
+                    return cookie.getValue();
+                }
+            }
+        }
+        String tokenFromHeader = req.getHeader(StaticNames.AUTH_HEADER);
+        return tokenFromHeader;
     }
 
     public boolean validateToken(String token) {

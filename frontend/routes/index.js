@@ -6,6 +6,10 @@ router.get('/', function(req, res, next) {
   res.render('index');
 });
 
+router.get('/logout', function(req, res, next) {
+    res.render('index');
+});
+
 router.get('/:page', function(req, res, next) {
     res.render(req.params.page);
 });

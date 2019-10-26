@@ -23,7 +23,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers(StaticNames.SERVER_PREFIX + "auth").permitAll()
+                .antMatchers(StaticNames.SERVER_PREFIX + "login").permitAll()
                 .antMatchers(StaticNames.SERVER_PREFIX + "register").permitAll()
 //                .antMatchers(HttpMethod.GET, "/vehicles/**").permitAll()
 //                .antMatchers(HttpMethod.DELETE, "/vehicles/**").hasRole("ADMIN")

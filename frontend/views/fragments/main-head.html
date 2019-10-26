@@ -1,0 +1,17 @@
+<a class="badge badge-info" href="/chatws">Chat ws</a>
+<a class="badge badge-info" href="/chatws">Chat long pulling</a>
+<a class="badge badge-dark" id="logout" href="logout">logout</a>
+<script>
+    $("#logout").click(() => {
+        jQuery.ajax({
+            'type': 'POST',
+            'url': "/api/logout",
+            'contentType': 'application/json',
+            'dataType': 'json',
+            data: JSON.stringify(data),
+            'success': () => {
+                document.location = "/";
+            }
+        });
+    });
+</script>
