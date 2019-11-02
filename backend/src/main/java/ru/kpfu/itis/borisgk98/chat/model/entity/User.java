@@ -1,5 +1,6 @@
 package ru.kpfu.itis.borisgk98.chat.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,8 +26,10 @@ public class User extends AbstractEntity {
     private String passHash;
 
     @OneToMany
+    @JsonIgnore
     private List<Message> messages;
 
     @ManyToMany
+    @JsonIgnore
     private List<UserRole> roles;
 }

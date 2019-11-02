@@ -9,11 +9,13 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
+import ru.kpfu.itis.borisgk98.chat.annotation.SocketHandler;
 import ru.kpfu.itis.borisgk98.chat.model.entity.Message;
 import ru.kpfu.itis.borisgk98.chat.model.entity.User;
 import ru.kpfu.itis.borisgk98.chat.security.SecurityService;
 import ru.kpfu.itis.borisgk98.chat.service.MessageService;
 import ru.kpfu.itis.borisgk98.chat.service.UserService;
+import ru.kpfu.itis.borisgk98.chat.service.WSMessageService;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -26,6 +28,8 @@ public class MessagesWebSocketHandler extends TextWebSocketHandler {
     private ObjectMapper objectMapper = new ObjectMapper();
     private final MessageService messageService;
     private final SecurityService securityService;
+    private final UserService userService;
+    private final WSMessageService wsMessageService;
 
 
     @Override
@@ -35,15 +39,17 @@ public class MessagesWebSocketHandler extends TextWebSocketHandler {
     }
 
     @Override
+    @SocketHandler
     public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
         HttpHeaders headers = session.getHandshakeHeaders();
         String messageAsString = (String) message.getPayload();
         Message body = objectMapper.readValue(messageAsString, Message.class);
-        body.setUser(securityService.getUser());
+        body.setUser(userService.findByLogin(session.getPrincipal().getName()).orElse(null));
         messageService.create(body);
         for (WebSocketSession currentSession : sessions.values()) {
-            currentSession.sendMessage(new TextMessage(messageAsString));
+            currentSession.sendMessage(wsMessageService.buildAsTextMessage(body));
         }
+        throw new Exception("Kek");
     }
 
     @Override

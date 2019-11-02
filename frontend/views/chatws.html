@@ -10,9 +10,20 @@
             let data = response['data'];
             let message = JSON.parse(data);
             console.log(message);
-            $("#mes").append("<div>" +
-                message.date + " " + (message.user == null ? "" : message.user.login) + ":  " + message.data +
-                "</div>");
+            switch (message.type) {
+                case "MESSAGE":
+                    let textMessage = JSON.parse(message.data);
+                    $("#mes").append("<div>" +
+                        textMessage.date + " " + (textMessage.user == null ? "" : textMessage.user.login) + ":  " + textMessage.data +
+                        "</div>");
+                    break;
+                case "ERROR":
+                    console.log(message);
+                    break;
+                default:
+                    console.log("UNKNOWN MESSAGE TYPE");
+                    console.log(message);
+            }
         };
 
         webSocket.onerror = function errorShow() {
