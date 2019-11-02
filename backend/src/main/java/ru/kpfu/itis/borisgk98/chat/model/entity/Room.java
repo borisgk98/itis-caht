@@ -5,14 +5,18 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -21,22 +25,20 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 @Table(schema = "ic", name = "message")
-public class Message extends AbstractEntity {
+public class Room extends AbstractEntity {
 
+    @CreatedBy
     @ManyToOne
-    private User user;
+    @JoinColumn(name = "owner")
+    private User owner;
 
+    @CreatedDate
     @Column(name = "date")
     private Date date;
 
     @Column(name = "data")
-    private String data;
-    @Column(name = "type")
-    private MessageType type;
+    private String name;
 
-    @OneToOne(mappedBy = "message", cascade = CascadeType.ALL, orphanRemoval = true)
-    private MessageStatusEntity statusEntity;
-
-    @ManyToOne
-    private Room room;
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
+    private List<Message> messages;
 }

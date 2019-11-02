@@ -13,12 +13,18 @@
             switch (message.type) {
                 case "MESSAGE":
                     let textMessage = JSON.parse(message.data);
-                    $("#mes").append("<div>" +
+                    $("#mes").append("<div class=''>" +
                         textMessage.date + " " + (textMessage.user == null ? "" : textMessage.user.login) + ":  " + textMessage.data +
                         "</div>");
                     break;
                 case "ERROR":
-                    console.log(message);
+                    $.notify("Ошибка сервера",{
+                        type: 'danger',
+                        animate: {
+                            enter: 'animated lightSpeedIn',
+                            exit: 'animated lightSpeedOut'
+                        }
+                    });
                     break;
                 default:
                     console.log("UNKNOWN MESSAGE TYPE");
