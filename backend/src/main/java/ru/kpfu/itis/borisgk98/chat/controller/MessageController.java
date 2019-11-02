@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.kpfu.itis.borisgk98.chat.model.entity.Message;
+import ru.kpfu.itis.borisgk98.chat.security.SecurityService;
 import ru.kpfu.itis.borisgk98.chat.service.MessageService;
 import ru.kpfu.itis.borisgk98.chat.statical.StaticNames;
 
@@ -18,6 +19,7 @@ import java.util.List;
 public class MessageController {
 
     private final MessageService messageService;
+    private final SecurityService securityService;
 
     @GetMapping("new")
     public List<Message> getNew() throws InterruptedException {
@@ -36,6 +38,7 @@ public class MessageController {
     @PostMapping
     public Message postMessage(@RequestBody Message message) {
         Message result;
+        message.setUser(securityService.getUser());
         synchronized (messageService) {
             result = messageService.create(message);
             messageService.notifyAll();

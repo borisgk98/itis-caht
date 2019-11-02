@@ -16,6 +16,7 @@ import java.util.Map;
 public class AuthHandshakeHandler implements HandshakeHandler {
 
     private DefaultHandshakeHandler handshakeHandler = new DefaultHandshakeHandler();
+
     @Override
     public boolean doHandshake(ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse, WebSocketHandler webSocketHandler, Map<String, Object> map) throws HandshakeFailureException {
         ServletServerHttpRequest request = (ServletServerHttpRequest)serverHttpRequest;

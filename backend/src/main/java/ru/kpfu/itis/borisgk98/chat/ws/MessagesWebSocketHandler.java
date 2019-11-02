@@ -10,7 +10,10 @@ import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 import ru.kpfu.itis.borisgk98.chat.model.entity.Message;
+import ru.kpfu.itis.borisgk98.chat.model.entity.User;
+import ru.kpfu.itis.borisgk98.chat.security.SecurityService;
 import ru.kpfu.itis.borisgk98.chat.service.MessageService;
+import ru.kpfu.itis.borisgk98.chat.service.UserService;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -22,6 +25,7 @@ public class MessagesWebSocketHandler extends TextWebSocketHandler {
     private Map<String, WebSocketSession> sessions = new ConcurrentHashMap<>();
     private ObjectMapper objectMapper = new ObjectMapper();
     private final MessageService messageService;
+    private final SecurityService securityService;
 
 
     @Override
@@ -35,6 +39,7 @@ public class MessagesWebSocketHandler extends TextWebSocketHandler {
         HttpHeaders headers = session.getHandshakeHeaders();
         String messageAsString = (String) message.getPayload();
         Message body = objectMapper.readValue(messageAsString, Message.class);
+        body.setUser(securityService.getUser());
         messageService.create(body);
         for (WebSocketSession currentSession : sessions.values()) {
             currentSession.sendMessage(new TextMessage(messageAsString));

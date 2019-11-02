@@ -9,6 +9,7 @@
             console.log(response);
             let data = response['data'];
             let message = JSON.parse(data);
+            console.log(message);
             $("#mes").append("<div>" +
                 message.date + " " + (message.user == null ? "" : message.user.login) + ":  " + message.data +
                 "</div>");
@@ -21,9 +22,7 @@
     }
 
     function sendMess() {
-        console.log("click");
         let text = $("#text").val();
-        console.log(text);
         let payload = {
             data: text
         };
