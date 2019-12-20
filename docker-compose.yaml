@@ -1,0 +1,41 @@
+version: '3'
+services:
+
+  nginx:
+    build: ./nginx
+    # image: nginx
+    restart: always
+    ports:
+      - 8080:80
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.f/default.conf
+
+  db:
+    image: postgres
+    restart: always
+    ports:
+      - 5440:5432
+    environment:
+      POSTGRES_PASSWORD: pgpass1234
+    # volumes:
+    #   - /databases/postgres/staxtaxi/data:/var/lib/postgresql/data
+
+  java-back-server:
+    # image: itischat-back
+    build: ./backend
+    restart: always
+    depends_on:
+      - db
+      - nginx
+    ports:
+      - 8081:8081
+    environment:
+      spring.datasource.url: jdbc:postgresql://db:5432/postgres
+      spring.datasource.password: pgpass1234
+
+  nodejs-front:
+    # image: itischat-back
+    build: ./frontend
+    restart: always
+    depends_on:
+      - nginx
