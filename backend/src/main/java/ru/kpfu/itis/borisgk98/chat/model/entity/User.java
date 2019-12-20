@@ -19,7 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(schema = "ic", name = "chat_user")
+@Table(name = "chat_user")
 public class User extends AbstractEntity {
 
     private String login;

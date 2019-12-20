@@ -24,7 +24,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(schema = "ic", name = "message")
+@Table(name = "message")
 public class Room extends AbstractEntity {
 
     @CreatedBy

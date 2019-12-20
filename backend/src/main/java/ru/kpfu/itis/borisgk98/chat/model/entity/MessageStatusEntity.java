@@ -21,7 +21,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(schema = "ic", name = "message_status_entity")
+@Table(name = "message_status_entity")
 public class MessageStatusEntity extends AbstractEntity {
 
     @OneToOne(fetch = FetchType.LAZY)

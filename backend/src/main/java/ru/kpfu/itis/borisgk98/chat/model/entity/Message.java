@@ -24,7 +24,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(schema = "ic", name = "message")
+@Table(name = "message")
 @EntityListeners(AuditingEntityListener.class)
 public class Message extends AbstractEntity {
 
