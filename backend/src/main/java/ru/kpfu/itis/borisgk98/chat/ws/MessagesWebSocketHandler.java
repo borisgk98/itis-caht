@@ -3,6 +3,8 @@ package ru.kpfu.itis.borisgk98.chat.ws;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -36,20 +38,19 @@ public class MessagesWebSocketHandler extends TextWebSocketHandler {
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         super.afterConnectionEstablished(session);
         sessions.put(session.getId(), session);
+        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(session.getPrincipal().getName(), ""));
     }
 
     @Override
     @SocketHandler
     public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
-        HttpHeaders headers = session.getHandshakeHeaders();
         String messageAsString = (String) message.getPayload();
         Message body = objectMapper.readValue(messageAsString, Message.class);
-        body.setUser(userService.findByLogin(session.getPrincipal().getName()).orElse(null));
         messageService.create(body);
         for (WebSocketSession currentSession : sessions.values()) {
             currentSession.sendMessage(wsMessageService.buildAsTextMessage(body));
         }
-        throw new Exception("Kek");
+        throw new Exception();
     }
 
     @Override
